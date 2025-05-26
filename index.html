@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Mood Logger</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; background: #e7f0ff; }
+    .container {
+      max-width: 400px; margin: auto; background: white; padding: 20px;
+      border-radius: 12px; box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    button {
+      margin-top: 10px; padding: 10px; width: 100%;
+      background: #4a90e2; color: white; border: none;
+      border-radius: 6px; cursor: pointer;
+    }
+    button:hover { background: #357ab8; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>How are you feeling today?</h2>
+    <form id="moodForm">
+      <select name="mood" id="mood" required>
+        <option value="">-- Select your mood --</option>
+        <option value="Happy">😊 Happy</option>
+        <option value="Sad">😢 Sad</option>
+        <option value="Stressed">😰 Stressed</option>
+        <option value="Excited">🤩 Excited</option>
+        <option value="Tired">😴 Tired</option>
+      </select>
+      <button type="submit">Log Mood</button>
+    </form>
+    <p id="responseMessage"></p>
+  </div>
+
+  <script>
+    const form = document.getElementById('moodForm');
+    const responseMessage = document.getElementById('responseMessage');
+
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+      
+      const mood = document.getElementById('mood').value;
+      const data = { mood };
+
+      fetch('https://script.google.com/macros/s/AKfycbyyx-LYoo8j42ghEZS1CsQi4GekZsMXOpuOcsgYexzcNKq3ePCjoovEwM_SQTcKpHer/exec', {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      responseMessage.textContent = 'Mood logged successfully!';
+      form.reset();
+    });
+  </script>
+</body>
+</html>
